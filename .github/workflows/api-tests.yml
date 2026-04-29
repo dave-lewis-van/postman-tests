@@ -1,0 +1,17 @@
+name: API Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman tests
+        run: newman run ReqRes.postman_collection.json -e ReqRes.postman_environment.json
+        env:
+          REQRES_API_KEY: ${{ secrets.REQRES_API_KEY }}
